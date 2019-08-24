@@ -7,6 +7,17 @@ router.get("/", (req, res, next) => {
   });
 });
 
+router.post("/", (req, res, next) => {
+  const weed = {
+    name: req.body.name,
+    price: req.body.price
+  };
+  res.status(201).json({
+    message: "Data saved",
+    createdWeed: weed
+  });
+});
+
 router.get("/:weedId", (req, res, next) => {
   const id = req.params.weedId;
   res.status(200).json({
