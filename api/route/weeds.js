@@ -10,6 +10,26 @@ router.get("/", (req, res, next) => {
   });
 });
 
+// router.get("/search", (req, res, next) => {
+//   const weedName = req.query.name;
+//   res.status(200).json({
+//     name: weedName
+//   });
+// });
+
+// Search by name
+router.get("/search", (req, res, next) => {
+  const weedName = req.query.name;
+  Weed.find({ name: weedName })
+    .exec()
+    .then(doc => {
+      res.status(200).json(doc);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
 // Post a data
 router.post("/", (req, res, next) => {
   const weed = new Weed({
@@ -54,17 +74,16 @@ router.get("/:weedId", (req, res, next) => {
     });
 });
 
-// Search by name
-router.get("/searchByName/:name", (req, res, next) => {
-  const name = req.query.name;
-  Weed.find({ name: name })
+// Search by FORM
+router.get("/search", (req, res, next) => {
+  const WeedForm = req.query.growth_form;
+  Weed.find({ growth_form: WeedForm })
     .exec()
     .then(doc => {
-      res.status(200).json(doc);
+      res.status(200).jsonclear(doc);
     })
     .catch(err => {
       res.status(500).json({ error: err });
     });
 });
-
 module.exports = router;
