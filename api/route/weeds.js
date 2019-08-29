@@ -166,7 +166,7 @@ router.get("/search/c_names", (req, res, next) => {
     })
       .exec()
       .then(doc => {
-        res.status(200).json(doc.length);
+        res.status(200).json(doc);
       })
       .catch(err => {
         res.status(200).json({ error: err });
