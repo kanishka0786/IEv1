@@ -80,21 +80,21 @@ router.get("/search/color", (req, res, next) => {
 });
 
 // Search by common names
-router.get("/search/c_names", (req, res, next) => {
-  const commonName = req.query.c_names;
+router.get("/search/flower_color", (req, res, next) => {
+  const flowerColor = req.query.flower_color;
   const growthForm = req.query.growth_form;
   //const flowerColor = req.query.flower_color;
   const leafArrangement = req.query.leaf_arr;
   const foilageColor = req.query.foliage_color;
   if (
-    commonName != "no" &&
+    flowerColor != "no" &&
     growthForm != "no" &&
     leafArrangement === "no" &&
     foilageColor === "no"
   ) {
     Weed.find({
       $and: [
-        { c_names: { $eq: commonName } },
+        { flower_color: { $eq: flowerColor } },
         { growth_form: { $eq: growthForm } }
       ]
     })
@@ -106,7 +106,7 @@ router.get("/search/c_names", (req, res, next) => {
         res.status(200).json({ error: err });
       });
   } else if (
-    commonName === "no" &&
+    flowerColor === "no" &&
     growthForm === "no" &&
     leafArrangement === "no" &&
     foilageColor === "no"
@@ -115,14 +115,14 @@ router.get("/search/c_names", (req, res, next) => {
       message: "choose atleast Two choices"
     });
   } else if (
-    commonName != "no" &&
+    flowerColor != "no" &&
     growthForm === "no" &&
     leafArrangement != "no" &&
     foilageColor === "no"
   ) {
     Weed.find({
       $and: [
-        { c_names: { $eq: commonName } },
+        { flower_color: { $eq: flowerColor } },
         { leaf_arr: { $eq: leafArrangement } }
       ]
     })
@@ -134,7 +134,7 @@ router.get("/search/c_names", (req, res, next) => {
         res.status(200).json({ error: err });
       });
   } else if (
-    commonName === "no" &&
+    flowerColor === "no" &&
     growthForm != "no" &&
     leafArrangement === "no" &&
     foilageColor != "no"
@@ -153,7 +153,7 @@ router.get("/search/c_names", (req, res, next) => {
         res.status(200).json({ error: err });
       });
   } else if (
-    commonName === "no" &&
+    flowerColor === "no" &&
     growthForm === "no" &&
     leafArrangement != "no" &&
     foilageColor != "no"
@@ -172,7 +172,7 @@ router.get("/search/c_names", (req, res, next) => {
         res.status(200).json({ error: err });
       });
   } else if (
-    commonName != "no" &&
+    flowerColor != "no" &&
     growthForm != "no" &&
     leafArrangement != "no" &&
     foilageColor != "no"
@@ -181,7 +181,7 @@ router.get("/search/c_names", (req, res, next) => {
       $and: [
         { foliage_color: { $eq: foilageColor } },
         { growth_form: { $eq: growthForm } },
-        { c_names: { $eq: commonName } },
+        { flower_color: { $eq: flowerColor } },
         { leaf_arr: { $eq: leafArrangement } }
       ]
     })

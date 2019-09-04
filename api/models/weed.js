@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const weedScheme = mongoose.Schema({
   id: Number,
   name: String,
+  Councildeclaration: String,
   image: String,
   c_names: Array,
   species_name: String,
