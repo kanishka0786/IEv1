@@ -1,5 +1,5 @@
 {
   "env": {
-    "process.env.MONGO_ATLAS_PW": "Ritesh@0786"
+    "process.env.MONGO_ATLAS_PW": "Ritesh"
   }
 }
