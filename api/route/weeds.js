@@ -9,10 +9,15 @@ router.get("/", (req, res, next) => {
   });
 });
 
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
 // Search by name
 router.get("/search", (req, res, next) => {
-  const weedName = req.query.name;
-  Weed.find({ name: weedName })
+  //const weedName = req.query.name;
+  const regex = new RegExp(escapeRegex(req.query.name), "gi");
+  Weed.find({ name: regex })
     .exec()
     .then(doc => {
       res.status(200).json(doc);
@@ -79,8 +84,47 @@ router.get("/search/color", (req, res, next) => {
     });
 });
 
+// search by growthform
+router.get("/search/growthForm", (req, res, next) => {
+  const growthForm = req.query.growth_form;
+  Weed.find({ growth_form: growthForm })
+    .exec()
+    .then(doc => {
+      res.status(200).json(doc);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
+// search by leaf Arrangement
+router.get("/search/leafArrangement", (req, res, next) => {
+  const leafArrangement = req.query.leaf_arr;
+  Weed.find({ leaf_arr: leafArrangement })
+    .exec()
+    .then(doc => {
+      res.status(200).json(doc);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
+// Search by flowercolor
+router.get("/search/flowercolor", (req, res, next) => {
+  const flowercolor = req.query.flower_color;
+  Weed.find({ flower_color: flowercolor })
+    .exec()
+    .then(doc => {
+      res.status(200).json(doc);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
 // Search by common names
-router.get("/search/flower_color", (req, res, next) => {
+router.get("/search/filters", (req, res, next) => {
   const flowerColor = req.query.flower_color;
   const growthForm = req.query.growth_form;
   //const flowerColor = req.query.flower_color;
@@ -182,6 +226,105 @@ router.get("/search/flower_color", (req, res, next) => {
         { foliage_color: { $eq: foilageColor } },
         { growth_form: { $eq: growthForm } },
         { flower_color: { $eq: flowerColor } },
+        { leaf_arr: { $eq: leafArrangement } }
+      ]
+    })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  } else if (
+    flowerColor != "no" &&
+    growthForm === "no" &&
+    leafArrangement === "no" &&
+    foilageColor != "no"
+  ) {
+    Weed.find({
+      $and: [
+        { foliage_color: { $eq: foilageColor } },
+        { flower_color: { $eq: flowerColor } }
+      ]
+    })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  } else if (
+    flowerColor != "no" &&
+    growthForm != "no" &&
+    leafArrangement != "no" &&
+    foilageColor === "no"
+  ) {
+    Weed.find({
+      $and: [
+        { growth_form: { $eq: growthForm } },
+        { flower_color: { $eq: flowerColor } },
+        { leaf_arr: { $eq: leafArrangement } }
+      ]
+    })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  } else if (
+    flowerColor != "no" &&
+    growthForm != "no" &&
+    leafArrangement === "no" &&
+    foilageColor != "no"
+  ) {
+    Weed.find({
+      $and: [
+        { foliage_color: { $eq: foilageColor } },
+        { growth_form: { $eq: growthForm } },
+        { flower_color: { $eq: flowerColor } }
+      ]
+    })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  } else if (
+    flowerColor != "no" &&
+    growthForm === "no" &&
+    leafArrangement != "no" &&
+    foilageColor != "no"
+  ) {
+    Weed.find({
+      $and: [
+        { foliage_color: { $eq: foilageColor } },
+        { flower_color: { $eq: flowerColor } },
+        { leaf_arr: { $eq: leafArrangement } }
+      ]
+    })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  } else if (
+    flowerColor === "no" &&
+    growthForm != "no" &&
+    leafArrangement != "no" &&
+    foilageColor != "no"
+  ) {
+    Weed.find({
+      $and: [
+        { foliage_color: { $eq: foilageColor } },
+        { growth_form: { $eq: growthForm } },
         { leaf_arr: { $eq: leafArrangement } }
       ]
     })

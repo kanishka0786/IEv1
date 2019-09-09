@@ -19,4 +19,4 @@ const weedScheme = mongoose.Schema({
   notifiable: Boolean
 });
 
-module.exports = mongoose.model("Weed", weedScheme, "weeds");
+module.exports = mongoose.model("weeds", weedScheme, "weeds");
