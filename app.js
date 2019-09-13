@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const weedRoutes = require("./api/route/weeds");
 const weedprobRoute = require("./api/route/weedsprohibited");
 const weedfinalRoute = require("./api/route/weedsfinal");
+const toptenweedsRoute = require("./api/route/toptenweeds");
 
 //
 mongoose.connect(
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 app.use("/weeds", weedRoutes);
 app.use("/weedprobRoutes", weedprobRoute);
 app.use("/weedsfinal", weedfinalRoute);
+app.use("/toptenweeds", toptenweedsRoute);
 
 // Handle errors
 app.use((req, res, next) => {
