@@ -13,6 +13,7 @@ const nameandriskratingRoute = require("./api/route/nameandriskrating");
 const riskratingpiechartRoute = require("./api/route/riskratingpiechart");
 const weedsfinalalldoneRoute = require("./api/route/weedsfinalalldone");
 const controlmethodRoute = require("./api/route/controlmethod");
+const weedscompletedRoute = require("./api/route/weedscompleted");
 
 //
 mongoose.connect(
@@ -50,6 +51,7 @@ app.use("/nameandriskrating", nameandriskratingRoute);
 app.use("/riskratingpiechart", riskratingpiechartRoute);
 app.use("/weedsfinalalldone", weedsfinalalldoneRoute);
 app.use("/controlmethod", controlmethodRoute);
+app.use("/weedscompleted", weedscompletedRoute);
 
 // Handle errors
 app.use((req, res, next) => {
