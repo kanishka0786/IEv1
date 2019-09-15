@@ -9,9 +9,9 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/search", (req, res, next) => {
-  //const weedName = req.query.Name;
+  const weedName = req.query.Name;
   //console.log(weedName);
-  WeedsProb.find({})
+  WeedsProb.find({ Name: weedName })
     .exec()
     .then(doc => {
       console.log(doc);
