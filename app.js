@@ -15,7 +15,7 @@ const weedsfinalalldoneRoute = require("./api/route/weedsfinalalldone");
 const controlmethodRoute = require("./api/route/controlmethod");
 const weedscompletedRoute = require("./api/route/weedscompleted");
 const pestdataRoute = require("./api/route/pestdata");
-
+const soilapiRoute = require("./api/route/soilapi");
 //
 mongoose.connect(
   "mongodb+srv://kanishka:Ritesh@cluster0-alih1.mongodb.net/test?retryWrites=true&w=majority",
@@ -54,6 +54,7 @@ app.use("/weedsfinalalldone", weedsfinalalldoneRoute);
 app.use("/controlmethod", controlmethodRoute);
 app.use("/weedscompleted", weedscompletedRoute);
 app.use("/pestdata", pestdataRoute);
+app.use("/soilapi", soilapiRoute);
 
 // Handle errors
 app.use((req, res, next) => {
