@@ -83,4 +83,15 @@ router.get("/search/soiltype", (req, res, next) => {
       res.status(500).json({ error: err });
     });
 });
+router.get("/search/floweringtime", (req, res, next) => {
+  const rePattern = req.query.New_Flower_Time;
+  Weed.find({ New_Flower_Time: { $regex: rePattern } })
+    .exec()
+    .then(doc => {
+      res.status(200).json(doc);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
 module.exports = router;
