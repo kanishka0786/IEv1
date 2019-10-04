@@ -94,4 +94,48 @@ router.get("/search/floweringtime", (req, res, next) => {
       res.status(500).json({ error: err });
     });
 });
+
+router.get("/search/filters", (req, res, next) => {
+  const soiltype = req.query.Soil_type;
+  //const floweringtime = req.query.New_Flower_Time;
+  const rePattern = req.query.New_Flower_Time;
+  //const flowerColor = req.query.flower_color;
+  if (soiltype != "no" && rePattern != "no") {
+    Weed.find({
+      $and: [
+        { Soil_type: { $eq: soiltype } },
+        { New_Flower_Time: { $regex: rePattern } }
+      ]
+    })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  } else if (soiltype === "no" && rePattern === "no") {
+    res.status(200).json({
+      message: "choose atleast Two choices"
+    });
+  } else if (soiltype != "no" && rePattern === "no") {
+    Weed.find({ Soil_type: { $eq: soiltype } })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  } else if (soiltype === "no" && rePattern != "no") {
+    Weed.find({ New_Flower_Time: { $regex: rePattern } })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  }
+});
 module.exports = router;
