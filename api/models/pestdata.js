@@ -8,14 +8,8 @@ const weedScheme = mongoose.Schema({
   identification: String,
   flora_affected: String,
   damage_caused: String,
-  symptom_1: String,
-  symptom_2: String,
-  symptom_3: Boolean,
-  symptom_4: String,
-  control_method1: String,
-  control_method2: String,
-  control_method3: String,
-  control_method4: String,
+  symptoms: String,
+  organic_control_methods: String,
   pesticidecontrol_methods: String
 });
 

@@ -48,4 +48,16 @@ router.get("/search/floweringtime", (req, res, next) => {
     });
 });
 
+router.get("/search/floraaffected", (req, res, next) => {
+  const rePattern = req.query.floraaffected;
+  Weed.find({ flora_affected: { $regex: rePattern } })
+    .exec()
+    .then(doc => {
+      res.status(200).json(doc);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
