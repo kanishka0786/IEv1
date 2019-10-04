@@ -60,4 +60,48 @@ router.get("/search/floraaffected", (req, res, next) => {
     });
 });
 
+router.get("/search/filters", (req, res, next) => {
+  const rePatterns = req.query.floraaffected;
+  const rePattern = req.query.floweringtime;
+  //const floweringtime = req.query.New_Flower_Time;
+  //const rePattern = req.query.New_Flower_Time;
+  //const flowerColor = req.query.flower_color;
+  if (rePatterns != "no" && rePattern != "no") {
+    Weed.find({
+      $and: [
+        { flora_affected: { $regex: rePatterns } },
+        { flowering_time: { $regex: rePattern } }
+      ]
+    })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  } else if (rePatterns === "no" && rePattern === "no") {
+    res.status(200).json({
+      message: "choose atleast Two choices"
+    });
+  } else if (rePatterns != "no" && rePattern === "no") {
+    Weed.find({ flora_affected: { $regex: rePatterns } })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  } else if (rePatterns === "no" && rePattern != "no") {
+    Weed.find({ flowering_time: { $regex: rePattern } })
+      .exec()
+      .then(doc => {
+        res.status(200).json(doc);
+      })
+      .catch(err => {
+        res.status(200).json({ error: err });
+      });
+  }
+});
 module.exports = router;
